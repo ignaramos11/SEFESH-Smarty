@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEFESH - Smart Eco-Friendly Energy Saving Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&amp;family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="app" id="app">
+      <div class="bg-orb bg-orb--green"></div>
+      <div class="bg-orb bg-orb--cyan"></div>
+
+      <header class="topbar">
+        <button class="avatar-ring" type="button" id="profileBtn" aria-label="Abrir perfil">
+          <span class="avatar-initial" id="uiAvatarInitial">U</span>
+          <span class="avatar-level" id="uiLevel">1</span>
+        </button>
+
+        <div class="topbar-center">
+          <div class="greeting">
+            <div class="greeting-title" id="uiGreeting">Hola</div>
+            <div class="greeting-sub">Smart Eco-Friendly Energy Saving Hub</div>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="pill pill--coins">
+            <span class="pill-icon" aria-hidden="true">🪙</span>
+            <span class="pill-value" id="uiCoins">0</span>
+          </div>
+          <div class="pill pill--status" id="uiConnPill">
+            <span class="pill-dot" id="uiConnDot" aria-hidden="true"></span>
+            <span class="pill-value" id="uiConnText">Modo Simulación</span>
+          </div>
+          <button class="icon-btn" type="button" id="settingsBtn" aria-label="Configuración">
+            ⚙️
+          </button>
+        </div>
+      </header>
+
+      <main class="viewport">
+        <section class="screen is-active" id="screen-home" data-screen="home">
+          <div class="stack">
+            <div class="card card--hero">
+              <div class="card-top">
+                <div>
+                  <div class="card-kicker">Dashboard</div>
+                  <div class="card-title">Tu energía, en control</div>
+                </div>
+                <div class="chip" id="uiSmartyChip">Modo Ahorro</div>
+              </div>
+
+              <div class="smarty-wrap">
+                <div class="smarty" id="smarty" data-mood="eco">
+                  <div class="accessory accessory--hat" data-accessory="hat" aria-hidden="true"></div>
+                  <div class="accessory accessory--glasses" data-accessory="glasses" aria-hidden="true"></div>
+                  <div class="accessory accessory--bow" data-accessory="bow" aria-hidden="true"></div>
+                  <div class="accessory accessory--crown" data-accessory="crown" aria-hidden="true"></div>
+                  <div class="accessory accessory--aura" data-accessory="aura" aria-hidden="true"></div>
+                  <div class="accessory accessory--techbg" data-accessory="techbg" aria-hidden="true"></div>
+
+                  <div class="bulb">
+                    <div class="bulb-glow" aria-hidden="true"></div>
+                    <div class="bulb-face">
+                      <div class="bulb-eyes" aria-hidden="true">
+                        <div class="bulb-eye"><div class="bulb-pupil"></div></div>
+                        <div class="bulb-eye"><div class="bulb-pupil"></div></div>
+                      </div>
+                      <div class="bulb-mouth" aria-hidden="true"></div>
+                      <div class="bulb-cheek bulb-cheek--l" aria-hidden="true"></div>
+                      <div class="bulb-cheek bulb-cheek--r" aria-hidden="true"></div>
+                    </div>
+                    <div class="bulb-base" aria-hidden="true">
+                      <span class="base-line"></span>
+                      <span class="base-line"></span>
+                      <span class="base-line"></span>
+                    </div>
+                  </div>
+
+                  <div class="speech" id="uiSpeech" role="status" aria-live="polite"></div>
+                </div>
+              </div>
+
+              <div class="metrics">
+                <div class="metric">
+                  <div class="metric-label">Consumo actual</div>
+                  <div class="metric-value">
+                    <span id="uiPower">0</span><span class="metric-unit">W</span>
+                  </div>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">Ahorro acumulado</div>
+                  <div class="metric-value">
+                    <span id="uiSavings">0</span><span class="metric-unit">%</span>
+                  </div>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">Tarifa proyectada</div>
+                  <div class="metric-value">
+                    <span class="metric-unit">$</span><span id="uiCost">0</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="progress">
+                <div class="progress-top">
+                  <span class="progress-label">Meta Eco</span>
+                  <span class="progress-value" id="uiGoalText">0%</span>
+                </div>
+                <div class="progress-track" aria-hidden="true">
+                  <div class="progress-fill" id="uiGoalFill"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card card--mission">
+              <div class="card-top">
+                <div>
+                  <div class="card-kicker">Misión diaria</div>
+                  <div class="card-title">Apaga 3 zonas innecesarias</div>
+                </div>
+                <div class="pill pill--mini">
+                  <span class="pill-icon" aria-hidden="true">+🪙</span>
+                  <span class="pill-value" id="uiMissionReward">120</span>
+                </div>
+              </div>
+              <div class="mission">
+                <div class="mission-track" aria-hidden="true">
+                  <div class="mission-fill" id="uiMissionFill"></div>
+                </div>
+                <div class="mission-bottom">
+                  <span class="mission-text" id="uiMissionText">0/3 completados</span>
+                  <button class="btn btn--ghost" type="button" id="missionHintBtn">Tip</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-zones" data-screen="zones">
+          <div class="stack">
+            <div class="screen-head">
+              <div>
+                <div class="screen-title">Zonas &amp; Automatización</div>
+                <div class="screen-sub">Control manual o eco automático, con fallback a simulación.</div>
+              </div>
+              <button class="btn btn--ghost" type="button" id="syncBtn">Sincronizar</button>
+            </div>
+
+            <div class="card">
+              <div class="card-top">
+                <div>
+                  <div class="card-kicker">Modo</div>
+                  <div class="card-title">Gestión inteligente</div>
+                </div>
+              </div>
+
+              <div class="segmented" role="tablist" aria-label="Selector de modo">
+                <button class="segmented-btn is-active" type="button" data-mode="auto" role="tab" aria-selected="true">Modo Eco</button>
+                <button class="segmented-btn" type="button" data-mode="manual" role="tab" aria-selected="false">Modo Manual</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-top">
+                <div>
+                  <div class="card-kicker">Zonas</div>
+                  <div class="card-title">Conmutación rápida</div>
+                </div>
+                <div class="pill pill--mini">
+                  <span class="pill-icon" aria-hidden="true">⚡</span>
+                  <span class="pill-value" id="uiZonesActive">0</span>
+                </div>
+              </div>
+
+              <div class="zones" id="zonesList">
+                <div class="zone" data-zone="living">
+                  <div class="zone-left">
+                    <div class="zone-icon" aria-hidden="true">🏠</div>
+                    <div class="zone-meta">
+                      <div class="zone-title">Aula / Living</div>
+                      <div class="zone-desc">Carga base y presencia</div>
+                    </div>
+                  </div>
+                  <label class="toggle" aria-label="Aula / Living">
+                    <input class="toggle-input" type="checkbox">
+                    <span class="toggle-ui" aria-hidden="true"></span>
+                  </label>
+                </div>
+
+                <div class="zone" data-zone="lights">
+                  <div class="zone-left">
+                    <div class="zone-icon" aria-hidden="true">💡</div>
+                    <div class="zone-meta">
+                      <div class="zone-title">Luces</div>
+                      <div class="zone-desc">Iluminación inteligente</div>
+                    </div>
+                  </div>
+                  <label class="toggle" aria-label="Luces">
+                    <input class="toggle-input" type="checkbox">
+                    <span class="toggle-ui" aria-hidden="true"></span>
+                  </label>
+                </div>
+
+                <div class="zone" data-zone="climate">
+                  <div class="zone-left">
+                    <div class="zone-icon" aria-hidden="true">❄️</div>
+                    <div class="zone-meta">
+                      <div class="zone-title">Climatización</div>
+                      <div class="zone-desc">A/C y temperatura</div>
+                    </div>
+                  </div>
+                  <label class="toggle" aria-label="Climatización">
+                    <input class="toggle-input" type="checkbox">
+                    <span class="toggle-ui" aria-hidden="true"></span>
+                  </label>
+                </div>
+
+                <div class="zone" data-zone="standby">
+                  <div class="zone-left">
+                    <div class="zone-icon" aria-hidden="true">🔌</div>
+                    <div class="zone-meta">
+                      <div class="zone-title">Standby</div>
+                      <div class="zone-desc">Dispositivos en espera</div>
+                    </div>
+                  </div>
+                  <label class="toggle" aria-label="Standby">
+                    <input class="toggle-input" type="checkbox">
+                    <span class="toggle-ui" aria-hidden="true"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="card card--mini">
+              <div class="mini-grid">
+                <div class="mini">
+                  <div class="mini-label">Carga estimada</div>
+                  <div class="mini-value"><span id="uiEstimatedLoad">0</span>W</div>
+                </div>
+                <div class="mini">
+                  <div class="mini-label">Estado</div>
+                  <div class="mini-value" id="uiModeLabel">Eco automático</div>
+                </div>
+              </div>
+              <div class="progress progress--thin">
+                <div class="progress-track" aria-hidden="true">
+                  <div class="progress-fill" id="uiLoadFill"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-fun" data-screen="fun">
+          <div class="stack">
+            <div class="screen-head">
+              <div>
+                <div class="screen-title">Fun Theory &amp; Tienda</div>
+                <div class="screen-sub">Personalizá a Smarty y ganá EcoPuntos con micro-logros.</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-top">
+                <div>
+                  <div class="card-kicker">Accesorios</div>
+                  <div class="card-title">Personalización</div>
+                </div>
+                <button class="btn btn--ghost" type="button" id="inventoryBtn">Inventario</button>
+              </div>
+              <div class="shop" id="shopGrid"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-top">
+                <div>
+                  <div class="card-kicker">Misiones</div>
+                  <div class="card-title">Recompensas</div>
+                </div>
+              </div>
+              <div class="quest" id="questCard">
+                <div class="quest-row">
+                  <div class="quest-left">
+                    <div class="quest-title">Modo Eco por 5 min</div>
+                    <div class="quest-desc">Optimizá automáticamente y acumulá ahorro.</div>
+                  </div>
+                  <div class="quest-reward">+80 🪙</div>
+                </div>
+                <div class="mission-track" aria-hidden="true">
+                  <div class="mission-fill" id="uiQuestFill"></div>
+                </div>
+                <div class="mission-bottom">
+                  <span class="mission-text" id="uiQuestText">0/5 min</span>
+                  <button class="btn btn--primary" type="button" id="startQuestBtn">Iniciar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-analytics" data-screen="analytics">
+          <div class="stack">
+            <div class="screen-head">
+              <div>
+                <div class="screen-title">Analítica &amp; Métricas</div>
+                <div class="screen-sub">Comparativo semanal con vista limpia, lista para sensores reales.</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-top">
+                <div>
+                  <div class="card-kicker">Semana</div>
+                  <div class="card-title">Consumo (kWh)</div>
+                </div>
+                <div class="pill pill--mini">
+                  <span class="pill-icon" aria-hidden="true">📈</span>
+                  <span class="pill-value" id="uiWeekTotal">0</span>
+                </div>
+              </div>
+              <div class="chart" id="weekChart"></div>
+              <div class="chart-legend">
+                <div class="legend-item"><span class="legend-dot legend-dot--eco"></span><span>Meta eco</span></div>
+                <div class="legend-item"><span class="legend-dot legend-dot--real"></span><span>Consumo</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <nav class="bottombar" aria-label="Navegación inferior">
+        <div class="bottombar-indicator" id="navIndicator" aria-hidden="true"></div>
+        <button class="nav-item is-active" type="button" data-target="home" aria-label="Inicio">
+          <span class="nav-ic" aria-hidden="true">🏠</span>
+          <span class="nav-tx">Inicio</span>
+        </button>
+        <button class="nav-item" type="button" data-target="zones" aria-label="Zonas">
+          <span class="nav-ic" aria-hidden="true">⚡</span>
+          <span class="nav-tx">Zonas</span>
+        </button>
+        <button class="nav-item" type="button" data-target="fun" aria-label="Tienda">
+          <span class="nav-ic" aria-hidden="true">🛒</span>
+          <span class="nav-tx">Tienda</span>
+        </button>
+        <button class="nav-item" type="button" data-target="analytics" aria-label="Métricas">
+          <span class="nav-ic" aria-hidden="true">📊</span>
+          <span class="nav-tx">Métricas</span>
+        </button>
+      </nav>
+
+      <div class="toast-host" id="toastHost" aria-live="polite" aria-relevant="additions"></div>
+
+      <div class="modal-backdrop" id="modalBackdrop" hidden>
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+          <div class="modal-header">
+            <div class="modal-title" id="modalTitle"></div>
+            <button class="icon-btn" type="button" id="modalCloseBtn" aria-label="Cerrar">
+              ✕
+            </button>
+          </div>
+          <div class="modal-body" id="modalBody"></div>
+        </div>
+      </div>
+
+      <template id="tplLogin">
+        <form class="form" data-form="login">
+          <div class="form-head">
+            <div class="form-title">Bienvenido a SEFESH</div>
+            <div class="form-sub">Creá tu perfil para activar la experiencia completa.</div>
+          </div>
+
+          <label class="field">
+            <span class="field-label">Nombre</span>
+            <input class="input" type="text" name="name" autocomplete="name" maxlength="24" placeholder="EcoUsuario" required>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Nivel inicial</span>
+            <input class="input" type="number" name="level" inputmode="numeric" placeholder="1" min="1" max="99">
+          </label>
+
+          <div class="form-actions">
+            <button class="btn btn--primary" type="submit">Entrar</button>
+          </div>
+        </form>
+      </template>
+
+      <template id="tplSettings">
+        <form class="form" data-form="settings">
+          <div class="form-head">
+            <div class="form-title">Configuración</div>
+            <div class="form-sub">Perfil, ESP32, y modo de simulación.</div>
+          </div>
+
+          <label class="field">
+            <span class="field-label">Nombre</span>
+            <input class="input" type="text" name="name" autocomplete="name" maxlength="24">
+          </label>
+
+          <label class="field">
+            <span class="field-label">ESP32 IP / Host</span>
+            <input class="input" type="text" name="esp32Host" inputmode="url" placeholder="192.168.1.100">
+            <span class="field-help">Se usa para /status y /control. Si falla, activa modo simulación.</span>
+          </label>
+
+          <label class="field">
+            <span class="field-label">EcoPuntos</span>
+            <input class="input" type="number" name="coins" inputmode="numeric" min="0" step="1">
+          </label>
+
+          <div class="form-actions">
+            <button class="btn btn--ghost" type="button" data-action="reset">Reset</button>
+            <button class="btn btn--primary" type="submit">Guardar</button>
+          </div>
+        </form>
+      </template>
+
+      <template id="tplInventory">
+        <div class="panel">
+          <div class="panel-title">Inventario</div>
+          <div class="panel-sub">Elegí un accesorio para equipar a Smarty.</div>
+          <div class="inventory" id="inventoryGrid"></div>
+        </div>
+      </template>
+
+      <script src="script.js"></script>
+    </div>
+  </body>
+</html>
