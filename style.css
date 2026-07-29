@@ -59,13 +59,6 @@ input {
   overflow: hidden;
 }
 
-.icon-sprite {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
 .bg-orb {
   position: absolute;
   width: 520px;
@@ -1012,7 +1005,7 @@ input {
   place-items: center;
 }
 
-.shop-accessory-icon svg {
+.shop-accessory-icon img {
   width: 100%;
   height: 100%;
   filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.24));

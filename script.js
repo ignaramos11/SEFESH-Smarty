@@ -7,14 +7,15 @@
 ========================================= */
 
 const STORAGE_KEY = "sefesh_state_v2";
+const OPENMOJI_CDN = "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji/color/svg";
 
 const SHOP_ITEMS = [
-  { id: "hat", name: "Sombrero Clásico", price: 200, accessory: "hat" },
-  { id: "glasses", name: "Gafas Cool", price: 350, accessory: "glasses" },
-  { id: "crown", name: "Corona Real", price: 500, accessory: "crown" },
-  { id: "bow", name: "Lazo Neón", price: 150, accessory: "bow" },
-  { id: "aura", name: "Aura Neón", price: 420, accessory: "aura" },
-  { id: "techbg", name: "Fondo Tecnológico", price: 460, accessory: "techbg" },
+  { id: "hat", name: "Sombrero Clásico", price: 200, accessory: "hat", asset: "1F3A9" },
+  { id: "glasses", name: "Gafas Cool", price: 350, accessory: "glasses", asset: "1F576" },
+  { id: "crown", name: "Corona Real", price: 500, accessory: "crown", asset: "1F451" },
+  { id: "bow", name: "Lazo Neón", price: 150, accessory: "bow", asset: "1F380" },
+  { id: "aura", name: "Aura Neón", price: 420, accessory: "aura", asset: "1F300" },
+  { id: "techbg", name: "Fondo Tecnológico", price: 460, accessory: "techbg", asset: "1F9EC" },
 ];
 
 const ZONES = [
@@ -549,7 +550,7 @@ function updateShopUI() {
     const el = document.createElement("div");
     el.className = "shop-item";
 
-    const icon = createAccessoryIcon(item.accessory);
+    const icon = createAccessoryIcon(item);
 
     const name = document.createElement("div");
     name.className = "shop-name";
@@ -587,15 +588,13 @@ function updateShopUI() {
   }
 }
 
-function createAccessoryIcon(accessory) {
+function createAccessoryIcon(item) {
   const wrapper = document.createElement("div");
   wrapper.className = "shop-accessory-icon";
-  const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  icon.setAttribute("viewBox", "0 0 120 100");
-  icon.setAttribute("aria-hidden", "true");
-  const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-  use.setAttribute("href", `#smarty-${accessory}`);
-  icon.appendChild(use);
+  const icon = document.createElement("img");
+  icon.src = `${OPENMOJI_CDN}/${item.asset}.svg`;
+  icon.alt = "";
+  icon.decoding = "async";
   wrapper.appendChild(icon);
   return wrapper;
 }
@@ -912,7 +911,7 @@ function openInventory() {
         const card = document.createElement("div");
         card.className = "inventory-item";
 
-        const top = createAccessoryIcon(it.accessory);
+        const top = createAccessoryIcon(it);
 
         const name = document.createElement("div");
         name.className = "shop-name";
