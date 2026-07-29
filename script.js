@@ -14,7 +14,7 @@ const SHOP_ITEMS = [
   { id: "glasses", name: "Gafas Cool", price: 350, accessory: "glasses", asset: "1F576" },
   { id: "crown", name: "Corona Real", price: 500, accessory: "crown", asset: "1F451" },
   { id: "bow", name: "Lazo Neón", price: 150, accessory: "bow", asset: "1F380" },
-  { id: "aura", name: "Aura Neón", price: 420, accessory: "aura", asset: "1F300" },
+  { id: "aura", name: "Aura Neón", price: 420, accessory: "aura" },
   { id: "techbg", name: "Fondo Tecnológico", price: 460, accessory: "techbg", asset: "1F9EC" },
 ];
 
@@ -591,6 +591,14 @@ function updateShopUI() {
 function createAccessoryIcon(item) {
   const wrapper = document.createElement("div");
   wrapper.className = "shop-accessory-icon";
+
+  if (item.accessory === "aura") {
+    const aura = document.createElement("div");
+    aura.className = "shop-accessory-icon__aura";
+    wrapper.appendChild(aura);
+    return wrapper;
+  }
+
   const icon = document.createElement("img");
   icon.src = `${OPENMOJI_CDN}/${item.asset}.svg`;
   icon.alt = "";

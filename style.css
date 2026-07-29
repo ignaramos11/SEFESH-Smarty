@@ -720,6 +720,7 @@ input {
   transition: opacity 240ms ease, transform 240ms ease;
   pointer-events: none;
   z-index: 3;
+  filter: saturate(1.2) drop-shadow(0 0 10px rgba(0, 229, 255, 0.18));
 }
 
 .accessory.is-active {
@@ -729,24 +730,34 @@ input {
 
 .accessory--hat {
   top: 5%; left: 28%; width: 44%;
+  filter: saturate(0.72) brightness(0.78) drop-shadow(0 0 12px rgba(0, 229, 255, 0.5));
 }
 
 .accessory--glasses {
   top: 39%; left: 22%; width: 56%;
+  filter: saturate(1.45) hue-rotate(130deg) drop-shadow(0 0 13px rgba(0, 229, 255, 0.78));
 }
 
 .accessory--bow {
   top: 23%; left: 66%; width: 27%;
+  filter: saturate(1.5) hue-rotate(310deg) drop-shadow(0 0 12px rgba(255, 51, 102, 0.68));
 }
 
 .accessory--crown {
   top: 1%; left: 26%; width: 48%;
+  filter: saturate(1.2) drop-shadow(0 0 14px rgba(255, 220, 90, 0.72));
 }
 
 .accessory--aura {
   top: 4%; left: 5%; width: 90%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(0, 229, 255, 0.38);
+  border-radius: 50%;
+  background: conic-gradient(from 90deg, rgba(0, 255, 136, 0.08), rgba(0, 229, 255, 0.34), rgba(255, 51, 102, 0.16), rgba(0, 255, 136, 0.08));
+  box-shadow: 0 0 0 4px rgba(0, 229, 255, 0.08), 0 0 28px rgba(0, 229, 255, 0.54);
   animation: spin 6s linear infinite;
   z-index: 1;
+  filter: none;
 }
 
 @keyframes spin {
@@ -761,6 +772,8 @@ input {
 .accessory--techbg {
   top: 8%; left: 8%; width: 84%;
   z-index: 0;
+  opacity: 0.8;
+  filter: saturate(1.5) hue-rotate(105deg) drop-shadow(0 0 14px rgba(0, 255, 136, 0.52));
 }
 
 .mission-track {
@@ -1009,6 +1022,15 @@ input {
   width: 100%;
   height: 100%;
   filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.24));
+}
+
+.shop-accessory-icon__aura {
+  width: 80%;
+  aspect-ratio: 1;
+  border: 2px solid rgba(0, 229, 255, 0.72);
+  border-radius: 50%;
+  background: conic-gradient(rgba(0, 255, 136, 0.2), rgba(0, 229, 255, 0.7), rgba(255, 51, 102, 0.3), rgba(0, 255, 136, 0.2));
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.62), inset 0 0 10px rgba(0, 255, 136, 0.24);
 }
 
 .shop-name {
