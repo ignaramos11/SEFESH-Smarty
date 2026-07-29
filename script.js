@@ -9,12 +9,12 @@
 const STORAGE_KEY = "sefesh_state_v2";
 
 const SHOP_ITEMS = [
-  { id: "hat", emoji: "🎩", name: "Sombrero Clásico", price: 200, accessory: "hat" },
-  { id: "glasses", emoji: "🕶️", name: "Gafas Cool", price: 350, accessory: "glasses" },
-  { id: "crown", emoji: "👑", name: "Corona Real", price: 500, accessory: "crown" },
-  { id: "bow", emoji: "🎀", name: "Lazo Neón", price: 150, accessory: "bow" },
-  { id: "aura", emoji: "🌀", name: "Aura Neón", price: 420, accessory: "aura" },
-  { id: "techbg", emoji: "🧬", name: "Fondo Tecnológico", price: 460, accessory: "techbg" },
+  { id: "hat", name: "Sombrero Clásico", price: 200, accessory: "hat" },
+  { id: "glasses", name: "Gafas Cool", price: 350, accessory: "glasses" },
+  { id: "crown", name: "Corona Real", price: 500, accessory: "crown" },
+  { id: "bow", name: "Lazo Neón", price: 150, accessory: "bow" },
+  { id: "aura", name: "Aura Neón", price: 420, accessory: "aura" },
+  { id: "techbg", name: "Fondo Tecnológico", price: 460, accessory: "techbg" },
 ];
 
 const ZONES = [
@@ -549,9 +549,7 @@ function updateShopUI() {
     const el = document.createElement("div");
     el.className = "shop-item";
 
-    const emoji = document.createElement("div");
-    emoji.className = "shop-emoji";
-    emoji.textContent = item.emoji;
+    const icon = createAccessoryIcon(item.accessory);
 
     const name = document.createElement("div");
     name.className = "shop-name";
@@ -581,12 +579,25 @@ function updateShopUI() {
     });
 
     actions.appendChild(primary);
-    el.appendChild(emoji);
+    el.appendChild(icon);
     el.appendChild(name);
     el.appendChild(price);
     el.appendChild(actions);
     grid.appendChild(el);
   }
+}
+
+function createAccessoryIcon(accessory) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "shop-accessory-icon";
+  const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  icon.setAttribute("viewBox", "0 0 120 100");
+  icon.setAttribute("aria-hidden", "true");
+  const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+  use.setAttribute("href", `#smarty-${accessory}`);
+  icon.appendChild(use);
+  wrapper.appendChild(icon);
+  return wrapper;
 }
 
 function updateAnalyticsUI() {
@@ -901,9 +912,7 @@ function openInventory() {
         const card = document.createElement("div");
         card.className = "inventory-item";
 
-        const top = document.createElement("div");
-        top.className = "shop-emoji";
-        top.textContent = it.emoji;
+        const top = createAccessoryIcon(it.accessory);
 
         const name = document.createElement("div");
         name.className = "shop-name";

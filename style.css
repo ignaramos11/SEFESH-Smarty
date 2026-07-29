@@ -20,6 +20,8 @@
   --font: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   --font-display: "Montserrat", "Poppins", system-ui, sans-serif;
   --safe-b: env(safe-area-inset-bottom, 0px);
+  --topbar-h: 84px;
+  --bottombar-h: 100px;
 }
 
 * {
@@ -54,6 +56,13 @@ input {
   height: 100vh;
   margin: 0 auto;
   position: relative;
+  overflow: hidden;
+}
+
+.icon-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
   overflow: hidden;
 }
 
@@ -94,13 +103,20 @@ input {
 }
 
 .topbar {
-  position: relative;
+  position: absolute;
+  inset: 0 0 auto;
   z-index: 10;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 12px;
-  padding: 18px 16px 14px;
+  min-height: var(--topbar-h);
+  padding: 14px 16px;
+  background: rgba(10, 11, 16, 0.52);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .avatar-ring {
@@ -245,14 +261,18 @@ input {
 .viewport {
   position: relative;
   z-index: 5;
-  height: calc(100vh - 92px - 86px);
-  padding: 0 16px;
-  overflow: hidden;
+  height: 100%;
+  padding: var(--topbar-h) 16px calc(var(--bottombar-h) + var(--safe-b));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
 }
 
+.viewport::-webkit-scrollbar { width: 0; }
+
 .screen {
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
+  overflow: visible;
   display: none;
   animation: screenIn 360ms cubic-bezier(0.2, 0.9, 0.2, 1);
 }
@@ -273,10 +293,8 @@ input {
 }
 
 .stack {
-  height: 100%;
-  overflow: auto;
-  padding-bottom: calc(18px + var(--safe-b));
-  scrollbar-width: none;
+  min-height: 100%;
+  padding-bottom: 18px;
 }
 
 .stack::-webkit-scrollbar {
@@ -456,7 +474,7 @@ input {
   padding: 8px 0 10px;
 }
 
-.smarty {
+.smarty-container {
   position: relative;
   width: 210px;
   height: 230px;
@@ -671,21 +689,21 @@ input {
   }
 }
 
-.smarty[data-mood="alert"] .bulb-glow {
+.smarty-container[data-mood="alert"] .bulb-glow {
   background: radial-gradient(circle at 50% 40%, rgba(255, 51, 102, 0.42) 0%, rgba(255, 51, 102, 0.12) 42%, transparent 70%);
 }
 
-.smarty[data-mood="alert"] .bulb-mouth {
+.smarty-container[data-mood="alert"] .bulb-mouth {
   border-color: rgba(255, 255, 255, 0.92);
   width: 44px;
   transform: rotate(180deg) translateY(-2px);
 }
 
-.smarty[data-mood="eco"] .bulb-mouth {
+.smarty-container[data-mood="eco"] .bulb-mouth {
   width: 56px;
 }
 
-.smarty.is-reacting {
+.smarty-container.is-reacting {
   animation: react 520ms ease;
 }
 
@@ -704,11 +722,11 @@ input {
 
 .accessory {
   position: absolute;
-  inset: 0;
   opacity: 0;
-  transform: scale(0.98);
+  transform: scale(0.94);
   transition: opacity 240ms ease, transform 240ms ease;
   pointer-events: none;
+  z-index: 3;
 }
 
 .accessory.is-active {
@@ -717,110 +735,25 @@ input {
 }
 
 .accessory--hat {
-  width: 88px;
-  height: 56px;
-  left: 50%;
-  top: 18px;
-  transform: translateX(-50%);
-  border-radius: 44px 44px 8px 8px;
-  background: linear-gradient(180deg, rgba(20, 22, 32, 0.95) 0%, rgba(8, 10, 14, 0.95) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
-}
-
-.accessory--hat::after {
-  content: "";
-  position: absolute;
-  left: -18px;
-  right: -18px;
-  bottom: -10px;
-  height: 16px;
-  border-radius: 10px;
-  background: rgba(20, 22, 32, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  top: 5%; left: 28%; width: 44%;
 }
 
 .accessory--glasses {
-  width: 112px;
-  height: 40px;
-  left: 50%;
-  top: 94px;
-  transform: translateX(-50%);
-}
-
-.accessory--glasses::before,
-.accessory--glasses::after {
-  content: "";
-  position: absolute;
-  top: 4px;
-  width: 40px;
-  height: 28px;
-  border-radius: 10px;
-  border: 3px solid rgba(10, 11, 16, 0.78);
-  background: rgba(0, 229, 255, 0.08);
-  box-shadow: 0 0 22px rgba(0, 229, 255, 0.18);
-}
-
-.accessory--glasses::before {
-  left: 0;
-}
-
-.accessory--glasses::after {
-  right: 0;
+  top: 39%; left: 22%; width: 56%;
 }
 
 .accessory--bow {
-  width: 54px;
-  height: 32px;
-  right: 18px;
-  top: 58px;
-}
-
-.accessory--bow::before,
-.accessory--bow::after {
-  content: "";
-  position: absolute;
-  width: 24px;
-  height: 30px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(255, 51, 102, 0.88) 0%, rgba(255, 51, 102, 0.25) 100%);
-  box-shadow: 0 0 18px rgba(255, 51, 102, 0.22);
-}
-
-.accessory--bow::before {
-  left: 0;
-  transform: rotate(-16deg);
-}
-
-.accessory--bow::after {
-  right: 0;
-  transform: rotate(16deg);
+  top: 23%; left: 66%; width: 27%;
 }
 
 .accessory--crown {
-  width: 90px;
-  height: 52px;
-  left: 50%;
-  top: 4px;
-  transform: translateX(-50%);
-  display: grid;
-  place-items: center;
-  font-size: 44px;
-  filter: drop-shadow(0 0 18px rgba(255, 220, 90, 0.22));
-}
-
-.accessory--crown::before {
-  content: "👑";
+  top: 1%; left: 26%; width: 48%;
 }
 
 .accessory--aura {
-  inset: -22px;
-  border-radius: 999px;
-  border: 1px solid rgba(0, 229, 255, 0.24);
-  box-shadow: 0 0 0 6px rgba(0, 229, 255, 0.06), 0 0 40px rgba(0, 229, 255, 0.10);
-  background: conic-gradient(from 90deg, rgba(0, 255, 136, 0.15), rgba(0, 229, 255, 0.22), rgba(255, 51, 102, 0.12), rgba(0, 255, 136, 0.15));
+  top: 4%; left: 5%; width: 90%;
   animation: spin 6s linear infinite;
-  mix-blend-mode: screen;
+  z-index: 1;
 }
 
 @keyframes spin {
@@ -833,16 +766,8 @@ input {
 }
 
 .accessory--techbg {
-  inset: -12px;
-  border-radius: 32px;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(0, 229, 255, 0.30) 0 2px, transparent 3px),
-    radial-gradient(circle at 70% 30%, rgba(0, 255, 136, 0.30) 0 2px, transparent 3px),
-    radial-gradient(circle at 40% 75%, rgba(255, 51, 102, 0.22) 0 2px, transparent 3px),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.00) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.22) inset;
-  opacity: 0.75;
+  top: 8%; left: 8%; width: 84%;
+  z-index: 0;
 }
 
 .mission-track {
@@ -1080,8 +1005,17 @@ input {
   min-height: 130px;
 }
 
-.shop-emoji {
-  font-size: 28px;
+.shop-accessory-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+}
+
+.shop-accessory-icon svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.24));
 }
 
 .shop-name {
