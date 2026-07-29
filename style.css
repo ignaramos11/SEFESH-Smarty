@@ -10,7 +10,7 @@
   --alert: #ff3366;
   --text: rgba(255, 255, 255, 0.92);
   --muted: rgba(255, 255, 255, 0.62);
-  --muted-2: rgba(255, 255, 255, 0.45);
+  --muted-2: rgba(255, 255, 255, 0.45)
   --shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
   --ring: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 0 0 1px rgba(0, 255, 136, 0.08) inset;
   --radius-xl: 28px;
@@ -876,12 +876,6 @@ input {
   font-weight: 600;
 }
 
-.account-reward-note {
-  margin-top: 10px;
-  color: var(--muted-2);
-  font-size: 11px;
-}
-
 .screen-head {
   display: flex;
   align-items: flex-start;
@@ -1454,28 +1448,6 @@ input {
   font-size: 11px;
   color: var(--muted-2);
   line-height: 1.35;
-}
-
-.initial-level-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 10px 14px;
-  border: 1px solid rgba(0, 255, 136, 0.34);
-  border-radius: var(--radius-sm);
-  color: rgba(225, 255, 245, 0.96);
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 800;
-  background: linear-gradient(135deg, rgba(0, 255, 136, 0.14), rgba(0, 229, 255, 0.10));
-  box-shadow: 0 0 0 1px rgba(0, 229, 255, 0.08) inset, 0 0 24px rgba(0, 255, 136, 0.08);
-}
-
-.initial-level-badge__icon {
-  color: var(--eco);
-  font-size: 16px;
-  text-shadow: 0 0 12px rgba(0, 255, 136, 0.75);
 }
 
 .form-actions {
