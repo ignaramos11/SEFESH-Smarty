@@ -828,6 +828,14 @@ function openLogin() {
         state.user.xp = 0;
         state.user.streak = 0;
         state.user.lastRewardDate = "";
+        localStorage.setItem(
+          "sefesh_user",
+          JSON.stringify({
+            name: nextName,
+            level: 1,
+            xp: 0,
+          }),
+        );
         persistSoon();
         closeModal();
         toast({ title: "Bienvenido", message: `Perfil listo, ${nextName}.` });
