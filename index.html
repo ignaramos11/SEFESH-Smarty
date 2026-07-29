@@ -136,6 +136,7 @@
                   <span class="mission-text" id="uiMissionText">0/3 completados</span>
                   <button class="btn btn--ghost" type="button" id="missionHintBtn">Tip</button>
                 </div>
+                <div class="account-reward-note">Recompensa ajustada a tu cuenta y racha.</div>
               </div>
             </div>
           </div>
@@ -149,6 +150,23 @@
                 <div class="screen-sub">Control manual o eco automático, con fallback a simulación.</div>
               </div>
               <button class="btn btn--ghost" type="button" id="syncBtn">Sincronizar</button>
+            </div>
+
+            <div class="card">
+              <div class="card-top">
+                <div>
+                  <div class="card-kicker">Tu cuenta</div>
+                  <div class="card-title">Progreso y beneficios</div>
+                </div>
+                <div class="pill pill--mini"><span class="pill-value" id="uiRewardMultiplier">x1.00</span></div>
+              </div>
+              <div class="mini-grid">
+                <div class="mini"><div class="mini-label">Racha diaria</div><div class="mini-value"><span id="uiStreak">0</span> días</div></div>
+                <div class="mini"><div class="mini-label">Experiencia</div><div class="mini-value"><span id="uiXp">0</span>/<span id="uiXpNext">250</span> XP</div></div>
+              </div>
+              <div class="progress progress--thin">
+                <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="uiXpFill"></div></div>
+              </div>
             </div>
 
             <div class="card">
@@ -289,7 +307,7 @@
                     <div class="quest-title">Modo Eco por 5 min</div>
                     <div class="quest-desc">Optimizá automáticamente y acumulá ahorro.</div>
                   </div>
-                  <div class="quest-reward">+80 🪙</div>
+                  <div class="quest-reward" id="uiQuestReward">+80 🪙</div>
                 </div>
                 <div class="mission-track" aria-hidden="true">
                   <div class="mission-fill" id="uiQuestFill"></div>
@@ -379,10 +397,13 @@
             <input class="input" type="text" name="name" autocomplete="name" maxlength="24" placeholder="EcoUsuario" required>
           </label>
 
-          <label class="field">
+          <div class="field" aria-label="Nivel inicial">
             <span class="field-label">Nivel inicial</span>
-            <input class="input" type="number" name="level" inputmode="numeric" placeholder="1" min="1" max="99">
-          </label>
+            <div class="initial-level-badge">
+              <span class="initial-level-badge__icon" aria-hidden="true">✦</span>
+              <span>Nivel Inicial: 1</span>
+            </div>
+          </div>
 
           <div class="form-actions">
             <button class="btn btn--primary" type="submit">Entrar</button>

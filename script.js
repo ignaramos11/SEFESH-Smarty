@@ -49,7 +49,9 @@ function clamp(n, min, max) {
 }
 
 function nowISODate() {
-  return new Date().toISOString().slice(0, 10);
+  const now = new Date();
+  const offset = now.getTimezoneOffset() * 60_000;
+  return new Date(now.getTime() - offset).toISOString().slice(0, 10);
 }
 
 function safeInt(value, fallback) {
@@ -69,6 +71,9 @@ function getDefaultState() {
     user: {
       name: "",
       level: 1,
+      xp: 0,
+      streak: 0,
+      lastRewardDate: "",
     },
     coins: 2450,
     esp32: {
@@ -137,7 +142,10 @@ function mergeState(base, incoming) {
 
   if (incoming.user && typeof incoming.user === "object") {
     out.user.name = typeof incoming.user.name === "string" ? incoming.user.name : out.user.name;
-    out.user.level = safeInt(incoming.user.level, out.user.level);
+    out.user.level = clamp(safeInt(incoming.user.level, out.user.level), 1, 99);
+    out.user.xp = Math.max(0, safeInt(incoming.user.xp, out.user.xp));
+    out.user.streak = Math.max(0, safeInt(incoming.user.streak, out.user.streak));
+    out.user.lastRewardDate = typeof incoming.user.lastRewardDate === "string" ? incoming.user.lastRewardDate : out.user.lastRewardDate;
   }
 
   out.coins = safeInt(incoming.coins, out.coins);
@@ -326,6 +334,50 @@ function ensureDailyReset() {
   }
 }
 
+function xpNeededForLevel(level = state.user.level) {
+  return 250 + (clamp(level, 1, 99) - 1) * 100;
+}
+
+function accountRewardMultiplier() {
+  const levelBonus = Math.min(Math.max(state.user.level - 1, 0), 20) * 0.05;
+  const streakBonus = Math.min(state.user.streak, 7) * 0.02;
+  return 1 + levelBonus + streakBonus;
+}
+
+function rewardFor(baseReward) {
+  return Math.round(baseReward * accountRewardMultiplier());
+}
+
+function updateStreakForDailyReward() {
+  const today = nowISODate();
+  if (state.user.lastRewardDate === today) return;
+
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const offset = yesterday.getTimezoneOffset() * 60_000;
+  const yesterdayKey = new Date(yesterday.getTime() - offset).toISOString().slice(0, 10);
+  state.user.streak = state.user.lastRewardDate === yesterdayKey ? state.user.streak + 1 : 1;
+  state.user.lastRewardDate = today;
+}
+
+function grantAccountReward(baseReward, { daily = false } = {}) {
+  if (daily) updateStreakForDailyReward();
+
+  const coins = rewardFor(baseReward);
+  const xpEarned = Math.max(10, Math.round(coins / 2));
+  state.coins += coins;
+  state.user.xp += xpEarned;
+
+  let levelsGained = 0;
+  while (state.user.level < 99 && state.user.xp >= xpNeededForLevel()) {
+    state.user.xp -= xpNeededForLevel();
+    state.user.level += 1;
+    levelsGained += 1;
+  }
+
+  return { coins, xpEarned, levelsGained };
+}
+
 function computeEnergyFromZones() {
   const onCount = ZONES.reduce((acc, z) => acc + (state.zones[z.id] ? 1 : 0), 0);
   const watts = ZONES.reduce((acc, z) => acc + (state.zones[z.id] ? z.watts : 0), 0);
@@ -404,6 +456,21 @@ function updateHeaderUI() {
   }
 }
 
+function updateAccountUI() {
+  const multiplier = document.getElementById("uiRewardMultiplier");
+  const streak = document.getElementById("uiStreak");
+  const xp = document.getElementById("uiXp");
+  const xpNext = document.getElementById("uiXpNext");
+  const xpFill = document.getElementById("uiXpFill");
+  const needed = xpNeededForLevel();
+
+  if (multiplier) multiplier.textContent = `x${accountRewardMultiplier().toFixed(2)}`;
+  if (streak) streak.textContent = String(state.user.streak);
+  if (xp) xp.textContent = String(state.user.xp);
+  if (xpNext) xpNext.textContent = String(needed);
+  if (xpFill) xpFill.style.width = `${clamp((state.user.xp / needed) * 100, 0, 100)}%`;
+}
+
 function updateDashboardUI() {
   const power = document.getElementById("uiPower");
   const savings = document.getElementById("uiSavings");
@@ -455,7 +522,7 @@ function updateMissionsUI() {
   const text = document.getElementById("uiMissionText");
   const reward = document.getElementById("uiMissionReward");
 
-  if (reward) reward.textContent = String(d.reward);
+  if (reward) reward.textContent = String(rewardFor(d.reward));
   if (fill) fill.style.width = `${clamp((d.done / d.target) * 100, 0, 100)}%`;
   if (text) text.textContent = `${clamp(d.done, 0, d.target)}/${d.target} completados`;
 
@@ -464,6 +531,9 @@ function updateMissionsUI() {
   const qText = document.getElementById("uiQuestText");
   if (qFill) qFill.style.width = `${clamp((q.done / q.target) * 100, 0, 100)}%`;
   if (qText) qText.textContent = `${clamp(q.done, 0, q.target)}/${q.target} min`;
+
+  const questReward = document.getElementById("uiQuestReward");
+  if (questReward) questReward.textContent = `+${rewardFor(q.reward)} 🪙`;
 
   const start = document.getElementById("startQuestBtn");
   if (start) start.textContent = q.running ? "En curso" : "Iniciar";
@@ -657,10 +727,12 @@ function progressDailyMission() {
 
   if (d.done >= d.target && !d.claimed) {
     d.claimed = true;
-    state.coins += d.reward;
+    const earned = grantAccountReward(d.reward, { daily: true });
     persistSoon();
     updateHeaderUI();
-    toast({ title: "Misión completada", message: `Recompensa: +${d.reward} 🪙` });
+    updateAccountUI();
+    updateMissionsUI();
+    toast({ title: "Misión completada", message: `Recompensa: +${earned.coins} 🪙 y ${earned.xpEarned} XP${earned.levelsGained ? ". ¡Subiste de nivel!" : ""}` });
   }
 }
 
@@ -695,10 +767,12 @@ function tickQuest() {
   if (q.done >= q.target && !q.claimed) {
     q.running = false;
     q.claimed = true;
-    state.coins += q.reward;
+    const earned = grantAccountReward(q.reward);
     persistSoon();
     updateHeaderUI();
-    toast({ title: "Quest completada", message: `Recompensa: +${q.reward} 🪙` });
+    updateAccountUI();
+    updateMissionsUI();
+    toast({ title: "Quest completada", message: `Recompensa: +${earned.coins} 🪙 y ${earned.xpEarned} XP${earned.levelsGained ? ". ¡Subiste de nivel!" : ""}` });
   }
 }
 
@@ -743,16 +817,17 @@ function openLogin() {
     onMount: (body) => {
       const form = body.querySelector('[data-form="login"]');
       const name = form?.querySelector('input[name="name"]');
-      const level = form?.querySelector('input[name="level"]');
       if (name) name.focus();
 
       form?.addEventListener("submit", (e) => {
         e.preventDefault();
         const nextName = (name?.value || "").trim() || "EcoUsuario";
-        const nextLevel = clamp(safeInt(level?.value, 1), 1, 99);
 
         state.user.name = nextName;
-        state.user.level = nextLevel;
+        state.user.level = 1;
+        state.user.xp = 0;
+        state.user.streak = 0;
+        state.user.lastRewardDate = "";
         persistSoon();
         closeModal();
         toast({ title: "Bienvenido", message: `Perfil listo, ${nextName}.` });
@@ -899,6 +974,7 @@ function renderAll() {
   computeEnergyFromZones();
 
   updateHeaderUI();
+  updateAccountUI();
   updateDashboardUI();
   updateZonesUI();
   updateMissionsUI();
