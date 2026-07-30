@@ -1459,6 +1459,253 @@ input {
   font-size: 12px;
 }
 
+@media (max-width: 430px) {
+  :root {
+    --topbar-h: 74px;
+    --bottombar-h: 88px;
+  }
+
+  .app {
+    width: 100vw;
+  }
+
+  .topbar {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .avatar-ring {
+    width: 46px;
+    height: 46px;
+  }
+
+  .avatar-level {
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+  }
+
+  .greeting-title {
+    font-size: 14px;
+  }
+
+  .greeting-sub {
+    font-size: 9px;
+  }
+
+  .pill {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+
+  .pill--status {
+    display: none;
+  }
+
+  .icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+  }
+
+  .viewport {
+    padding: calc(var(--topbar-h) + 4px) 12px calc(var(--bottombar-h) + 10px + var(--safe-b));
+  }
+
+  .card {
+    padding: 14px;
+    border-radius: 22px;
+  }
+
+  .card-title {
+    font-size: 15px;
+  }
+
+  .card-kicker {
+    font-size: 10px;
+  }
+
+  .chip {
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+
+  .smarty-wrap {
+    padding: 4px 0 6px;
+  }
+
+  .smarty-container {
+    width: 190px;
+    height: 200px;
+  }
+
+  .bulb {
+    width: 132px;
+    height: 176px;
+    transform: scale(0.92);
+    transform-origin: center;
+  }
+
+  .bulb-face {
+    width: 132px;
+    height: 150px;
+    border-radius: 72px 72px 54px 54px;
+  }
+
+  .bulb-eyes {
+    top: 54px;
+    gap: 28px;
+  }
+
+  .bulb-eye {
+    width: 24px;
+    height: 24px;
+  }
+
+  .bulb-pupil {
+    width: 10px;
+    height: 10px;
+  }
+
+  .bulb-mouth {
+    top: 92px;
+    width: 44px;
+    height: 18px;
+    border-width: 3px;
+  }
+
+  .bulb-cheek {
+    top: 88px;
+    width: 15px;
+    height: 8px;
+  }
+
+  .bulb-base {
+    width: 54px;
+    height: 34px;
+    bottom: -6px;
+  }
+
+  .base-line {
+    width: 38px;
+  }
+
+  .speech {
+    max-width: 220px;
+    min-width: 160px;
+    padding: 9px 10px;
+    font-size: 10.5px;
+    line-height: 1.35;
+    top: -4px;
+  }
+
+  .speech::after {
+    bottom: -8px;
+    border-top-width: 8px;
+    border-left-width: 8px;
+    border-right-width: 8px;
+  }
+
+  .metrics {
+    gap: 8px;
+  }
+
+  .metric {
+    min-height: 60px;
+    padding: 10px;
+  }
+
+  .metric-value {
+    font-size: 16px;
+  }
+
+  .progress-top {
+    font-size: 11px;
+  }
+
+  .mission-bottom {
+    gap: 8px;
+  }
+
+  .btn {
+    padding: 10px 12px;
+    border-radius: 14px;
+  }
+
+  .screen-head {
+    margin: 4px 0 10px;
+  }
+
+  .screen-title {
+    font-size: 16px;
+  }
+
+  .screen-sub {
+    font-size: 11px;
+  }
+
+  .zone {
+    padding: 10px 11px 10px 12px;
+  }
+
+  .zone-title {
+    font-size: 12px;
+  }
+
+  .zone-desc {
+    font-size: 10px;
+  }
+
+  .toggle {
+    width: 50px;
+    height: 30px;
+  }
+
+  .shop-item {
+    padding: 12px;
+  }
+
+  .shop-name {
+    font-size: 12px;
+  }
+
+  .shop-price {
+    font-size: 11px;
+  }
+
+  .quest-row {
+    gap: 8px;
+  }
+
+  .quest-title {
+    font-size: 12px;
+  }
+
+  .quest-desc {
+    font-size: 10px;
+  }
+
+  .quest-reward {
+    font-size: 11px;
+  }
+
+  .modal {
+    width: min(100%, 420px);
+  }
+
+  .modal-body {
+    padding: 14px;
+  }
+
+  .form-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .inventory {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 380px) {
   .metrics {
     grid-template-columns: 1fr;
