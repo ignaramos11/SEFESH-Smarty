@@ -45,6 +45,22 @@ const SMARTY_PHRASES_NEUTRAL = [
   "Simulación activa: configurá el host del ESP32.",
 ];
 
+function buildSmartySpeech(mood) {
+  const powerW = Math.round(state.energy.powerW);
+  const coins = state.coins.toLocaleString("es-AR");
+
+  if (mood === "alert") {
+    const activeZones = ZONES.filter((zone) => Boolean(state.zones[zone.id])).length;
+    return `¡Atención! ${powerW}W y ${activeZones} zonas activas: apagá lo que no uses.`;
+  }
+
+  if (mood === "eco") {
+    return `¡Hola! ${powerW}W de consumo es excelente, con ${coins} EcoPuntos seguimos ahorrando.`;
+  }
+
+  return `Listo para seguir. ${powerW}W de referencia y ${coins} EcoPuntos en juego.`;
+}
+
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
 }
@@ -413,10 +429,14 @@ function updateSmartyMood() {
   chip.classList.toggle("is-alert", mood === "alert");
   chip.textContent = mood === "alert" ? "Alerta Consumo" : "Modo Ahorro";
 
-  let phrase = "";
-  if (mood === "alert") phrase = SMARTY_PHRASES_ALERT[Math.floor(Math.random() * SMARTY_PHRASES_ALERT.length)];
-  else if (mood === "eco") phrase = SMARTY_PHRASES_ECO[Math.floor(Math.random() * SMARTY_PHRASES_ECO.length)];
-  else phrase = SMARTY_PHRASES_NEUTRAL[Math.floor(Math.random() * SMARTY_PHRASES_NEUTRAL.length)];
+  let phrase = buildSmartySpeech(mood);
+  if (mood === "alert") {
+    phrase = `${SMARTY_PHRASES_ALERT[Math.floor(Math.random() * SMARTY_PHRASES_ALERT.length)]} ${buildSmartySpeech(mood)}`;
+  } else if (mood === "eco") {
+    phrase = `${SMARTY_PHRASES_ECO[Math.floor(Math.random() * SMARTY_PHRASES_ECO.length)]} ${buildSmartySpeech(mood)}`;
+  } else {
+    phrase = `${SMARTY_PHRASES_NEUTRAL[Math.floor(Math.random() * SMARTY_PHRASES_NEUTRAL.length)]} ${buildSmartySpeech(mood)}`;
+  }
 
   speech.textContent = phrase;
 }

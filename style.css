@@ -10,7 +10,7 @@
   --alert: #ff3366;
   --text: rgba(255, 255, 255, 0.92);
   --muted: rgba(255, 255, 255, 0.62);
-  --muted-2: rgba(255, 255, 255, 0.45)
+  --muted-2: rgba(255, 255, 255, 0.45);
   --shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
   --ring: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 0 0 1px rgba(0, 255, 136, 0.08) inset;
   --radius-xl: 28px;
@@ -646,17 +646,23 @@ input {
   top: -6px;
   left: 50%;
   transform: translate(-50%, -100%);
-  max-width: 260px;
-  padding: 10px 12px;
+  max-width: 270px;
+  min-width: 200px;
+  padding: 11px 13px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.90);
-  color: rgba(10, 11, 16, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  background: rgba(7, 12, 20, 0.84);
+  color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 255, 136, 0.34);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 22px rgba(0, 255, 136, 0.16);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   font-size: 12px;
   font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
   opacity: 0;
   pointer-events: none;
+  z-index: 6;
   animation: speechIn 420ms ease forwards;
 }
 
@@ -668,7 +674,7 @@ input {
   transform: translateX(-50%);
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-top: 10px solid rgba(255, 255, 255, 0.90);
+  border-top: 10px solid rgba(7, 12, 20, 0.84);
 }
 
 @keyframes speechIn {
@@ -748,24 +754,36 @@ input {
   filter: saturate(1.2) drop-shadow(0 0 14px rgba(255, 220, 90, 0.72));
 }
 
-.accessory--aura {
-  top: 4%; left: 5%; width: 90%;
-  aspect-ratio: 1;
-  border: 1px solid rgba(0, 229, 255, 0.38);
-  border-radius: 50%;
-  background: conic-gradient(from 90deg, rgba(0, 255, 136, 0.08), rgba(0, 229, 255, 0.34), rgba(255, 51, 102, 0.16), rgba(0, 255, 136, 0.08));
-  box-shadow: 0 0 0 4px rgba(0, 229, 255, 0.08), 0 0 28px rgba(0, 229, 255, 0.54);
-  animation: spin 6s linear infinite;
-  z-index: 1;
-  filter: none;
+.accessory--dna {
+  top: 50%;
+  left: 50%;
+  width: 92%;
+  height: auto;
+  z-index: 0;
+  transform: translate(-50%, -50%) scale(0.94);
+  filter: drop-shadow(0 0 22px rgba(0, 255, 136, 0.32));
+  animation: dnaPulse 4.4s ease-in-out infinite;
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
+.accessory--dna.is-active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.accessory--dna svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@keyframes dnaPulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 18px rgba(0, 255, 136, 0.24));
+    opacity: 0.92;
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    filter: drop-shadow(0 0 28px rgba(0, 255, 136, 0.42));
+    opacity: 1;
   }
 }
 
