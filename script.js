@@ -1,11 +1,3 @@
-/* =========================================
-   SEFESH — Frontend App (Vanilla)
-   - Estado central + persistencia (localStorage)
-   - UI de modales (sin prompt/alert)
-   - ESP32 REST (timeout + fallback a simulación)
-   - Motor de estado de Smarty (eco vs alerta)
-========================================= */
-
 const STORAGE_KEY = "sefesh_state_v2";
 const OPENMOJI_CDN = "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji/color/svg";
 
